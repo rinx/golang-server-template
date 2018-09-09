@@ -25,12 +25,12 @@ func parseParams() (*params, error) {
 	f := flag.NewFlagSet(filepath.Base(os.Args[0]), flag.ContinueOnError)
 	f.StringVar(&p.configFilePath,
 		"f",
-		"/etc/athenz/tenant/config.yaml",
+		"/etc/server/config.yaml",
 		"tenant config yaml file path")
 	f.BoolVar(&p.showVersion,
 		"version",
 		false,
-		"show athenz tenantd version")
+		"show server version")
 
 	err := f.Parse(os.Args[1:])
 	if err != nil {
@@ -59,7 +59,7 @@ func run(cfg config.Config) error {
 		select {
 		case <-sigCh:
 			close(sigCh)
-			glg.Warn("athenz tenant server shutdown...")
+			glg.Warn("server shutdown...")
 			return daemon.Stop(ctx)
 		case err = <-ech:
 			close(ech)
@@ -88,7 +88,7 @@ func main() {
 	}
 
 	if p.showVersion {
-		glg.Infof("athenz tenantd version -> %s", config.GetVersion())
+		glg.Infof("server version -> %s", config.GetVersion())
 		return
 	}
 
@@ -99,7 +99,7 @@ func main() {
 	}
 
 	if cfg.Version != config.GetVersion() {
-		glg.Fatal(errors.New("invalid athenz tenant proxy configuration version"))
+		glg.Fatal(errors.New("invalid configuration version"))
 		return
 	}
 
