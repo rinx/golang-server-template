@@ -79,7 +79,7 @@ func main() {
 	}()
 
 	// Docker環境においては色出力の意味がないため無効にする
-	defer glg.Get().Stop()
+	defer glg.Get().DisableColor().Stop()
 
 	p, err := parseParams()
 	if err != nil {

@@ -11,11 +11,11 @@ import (
 
 	"github.com/kpango/glg"
 	"github.com/kpango/golang-server-template/config"
-	"github.com/kpango/golang-server-template/handler/rest/handler"
+	"github.com/kpango/golang-server-template/handler/rest"
 )
 
 //New returns Routed ServeMux
-func New(cfg config.Server, h handler.Handler) *http.ServeMux {
+func New(cfg config.Server, h rest.Handler) *http.ServeMux {
 
 	http.DefaultTransport.(*http.Transport).MaxIdleConnsPerHost = 32
 
@@ -34,7 +34,7 @@ func New(cfg config.Server, h handler.Handler) *http.ServeMux {
 	return mux
 }
 
-func routing(m []string, t time.Duration, h handler.Func) http.Handler {
+func routing(m []string, t time.Duration, h rest.Func) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		for _, method := range m {
 			if strings.EqualFold(r.Method, method) || method == "*" {

@@ -3,17 +3,17 @@ package router
 import (
 	"net/http"
 
-	"github.com/kpango/golang-server-template/handler/rest/handler"
+	"github.com/kpango/golang-server-template/handler/rest"
 )
 
 type Route struct {
 	Name        string
 	Methods     []string
 	Pattern     string
-	HandlerFunc handler.Func
+	HandlerFunc rest.Func
 }
 
-func NewRoutes(h handler.Handler) []Route {
+func NewRoutes(h rest.Handler) []Route {
 	return []Route{
 		{
 			"Sample Handler",
