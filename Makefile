@@ -21,5 +21,12 @@ clean:
 	rm -rf ./*.log
 
 test:
-	go test --race ./...
+	GOCACHE=off go test --race -coverprofile=cover.out ./...
+	go tool cover -html=cover.out -o cover.html
+	rm -rf cover.out
 
+dbuild:
+	sudo docker build --pull=true --file=Dockerfile -t kpango/golang-server-template:latest .
+
+dpush: dbuild
+	sudo docker push kpango/golang-server-template:latest
