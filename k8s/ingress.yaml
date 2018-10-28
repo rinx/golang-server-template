@@ -1,0 +1,8 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: server-ing
+spec:
+  backend:
+    serviceName: server-service
+    servicePort: 80

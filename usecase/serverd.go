@@ -11,8 +11,7 @@ import (
 )
 
 type Runner interface {
-	Start(ctx context.Context) chan error
-	Stop(ctx context.Context) error
+	Start(ctx context.Context) chan []error
 }
 
 type run struct {
@@ -24,16 +23,13 @@ func New(cfg config.Config) (Runner, error) {
 	return &run{
 		cfg: cfg,
 		server: service.NewServer(cfg.Server,
-			grpc.New(),
 			router.New(cfg.Server,
-				rest.New())),
+				rest.New()),
+			grpc.New().GetGRPCServer(),
+		),
 	}, nil
 }
 
-func (t *run) Start(ctx context.Context) chan error {
+func (t *run) Start(ctx context.Context) chan []error {
 	return t.server.ListenAndServe(ctx)
-}
-
-func (t *run) Stop(ctx context.Context) error {
-	return t.server.Shutdown(ctx)
 }

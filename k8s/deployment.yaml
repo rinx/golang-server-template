@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: server
+  name: server-deployment
+spec:
+  selector:
+    matchLabels:
+      app: server
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        run: server
+    spec:
+      containers:
+      - name: nginx
+        image: k8s.gcr.io/kpango/server:latest
+        ports:
+        - containerPort: 80
+          protocol: TCP
+      terminationGracePeriodSeconds: 60

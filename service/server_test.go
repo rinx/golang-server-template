@@ -10,12 +10,14 @@ import (
 	"time"
 
 	"github.com/kpango/golang-server-template/config"
+	"google.golang.org/grpc"
 )
 
 func TestNewServer(t *testing.T) {
 	type args struct {
 		cfg config.Server
 		h   http.Handler
+		g   *grpc.Server
 	}
 	tests := []struct {
 		name      string
@@ -50,7 +52,9 @@ func TestNewServer(t *testing.T) {
 			name: "Check server address",
 			args: args{
 				cfg: config.Server{
-					Port:        8081,
+					GrpcPort:    8083,
+					GrpcWebPort: 8082,
+					RestPort:    8081,
 					HealthzPath: "/healthz",
 					HealthzPort: 8080,
 				},
@@ -73,7 +77,7 @@ func TestNewServer(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got := NewServer(tt.args.cfg, tt.args.h)
+			got := NewServer(tt.args.cfg, tt.args.h, tt.args.g)
 			if err := tt.checkFunc(got, tt.want); err != nil {
 				t.Errorf("NewServer() = %v, want %v", got, tt.want)
 			}
@@ -301,7 +305,9 @@ func Test_server_listenAndServeAPI(t *testing.T) {
 						Addr: fmt.Sprintf(":%d", 9999),
 					},
 					cfg: config.Server{
-						Port: 9999,
+						GrpcPort:    9997,
+						GrpcWebPort: 9998,
+						RestPort:    9999,
 						TLS: config.TLS{
 							Enabled: true,
 							CertKey: certKey,
@@ -327,7 +333,7 @@ func Test_server_listenAndServeAPI(t *testing.T) {
 						s.srv.Shutdown(context.Background())
 					}()
 
-					got := s.listenAndServeAPI()
+					got := s.listenAndServeRestAPI()
 
 					if got != want {
 						return fmt.Errorf("got:\t%v\nwant:\t%v", got, want)

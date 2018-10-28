@@ -8,16 +8,13 @@ RUN set -eux \
 
 WORKDIR ${GOPATH}/src/github.com/kpango/golang-server-template
 
-RUN go get -v -u github.com/golang/dep/cmd/dep
-
 COPY . .
-
-RUN "${GOPATH}/bin/dep" ensure
 
 RUN CGO_ENABLED=1 \
     CGO_CXXFLAGS="-g -Ofast -march=native" \
     CGO_FFLAGS="-g -Ofast -march=native" \
     CGO_LDFLAGS="-g -Ofast -march=native" \
+    GO111MODULE=on \
     GOOS=$(go env GOOS) \
     GOARCH=$(go env GOARCH) \
     go build --ldflags '-s -w -linkmode "external" -extldflags "-static -fPIC -m64 -pthread -std=c++11 -lstdc++"' -a -tags "cgo netgo" -installsuffix "cgo netgo" -o "${APP_NAME}" \
@@ -28,6 +25,7 @@ RUN apk del build-dependencies --purge \
 
 # Start From Scratch For Running Environment
 FROM scratch
+# Start From Alpine For Debug Environment
 # FROM alpine:latest
 
 ENV APP_NAME server

@@ -308,9 +308,9 @@ func (s *server) listenAndServe(starter func() error) <-chan error {
 // listenAndServeGrpcAPI return any error occurred when start a HTTPS server, including any error when loading TLS certificate
 func (s *server) listenAndServeGrpcAPI() error {
 	cfg, err := NewTLSConfig(s.cfg.TLS)
-	l, err := net.Listen("tcp", s.cfg.GrpcPort)
+	l, err := net.Listen("tcp", fmt.Sprintf(":%d", s.cfg.GrpcPort))
 	if err == nil && cfg != nil {
-		l, err = tls.NewListener(l, cfg)
+		l = tls.NewListener(l, cfg)
 	}
 	if err != nil {
 		glg.Error(err)
