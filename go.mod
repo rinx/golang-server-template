@@ -6,7 +6,7 @@ require (
 	github.com/kpango/glg v1.2.1
 	github.com/pkg/errors v0.8.0
 	github.com/rs/cors v1.6.0 // indirect
-	golang.org/x/net v0.0.0-20181023162649-9b4f9f5ad519 // indirect
+	golang.org/x/net v0.0.0-20190213064436-3a22650c66bd // indirect
 	golang.org/x/sys v0.0.0-20181026203630-95b1ffbd15a5 // indirect
 	google.golang.org/genproto v0.0.0-20181026194446-8b5d7a19e2d9 // indirect
 	google.golang.org/grpc v1.16.0
