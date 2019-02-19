@@ -2,7 +2,7 @@ module github.com/kpango/golang-server-template
 
 require (
 	github.com/gorilla/websocket v1.4.0 // indirect
-	github.com/improbable-eng/grpc-web v0.0.0-20180907072152-8bc2a4d43363
+	github.com/improbable-eng/grpc-web v0.0.0-20190218185224-0ce3b686ebd7
 	github.com/kpango/glg v1.2.1
 	github.com/pkg/errors v0.8.0
 	github.com/rs/cors v1.6.0 // indirect
