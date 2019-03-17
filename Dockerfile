@@ -1,4 +1,4 @@
-FROM golang:1.11-alpine AS builder
+FROM golang:1.12-alpine AS builder
 
 ENV APP_NAME server
 
