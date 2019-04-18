@@ -8,6 +8,6 @@ require (
 	github.com/kpango/glg v1.3.0
 	github.com/pkg/errors v0.8.1
 	github.com/rs/cors v1.6.0 // indirect
-	google.golang.org/grpc v1.19.1
+	google.golang.org/grpc v1.20.1
 	gopkg.in/yaml.v2 v2.2.2
 )
