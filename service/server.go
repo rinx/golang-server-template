@@ -186,6 +186,8 @@ func (s *server) ListenAndServe(ctx context.Context) chan []error {
 				if gwrunning {
 					errs = appendErr(errs, s.grpcWebShutdown(ctx))
 				}
+
+				echan <- errs
 				return
 			case err = <-hech:
 				if err != nil {
@@ -203,6 +205,8 @@ func (s *server) ListenAndServe(ctx context.Context) chan []error {
 				if gwrunning {
 					errs = appendErr(errs, s.grpcWebShutdown(ctx))
 				}
+
+				echan <- errs
 				return
 			case err = <-gech:
 				if err != nil {
@@ -219,6 +223,8 @@ func (s *server) ListenAndServe(ctx context.Context) chan []error {
 				if gwrunning {
 					errs = appendErr(errs, s.grpcWebShutdown(ctx))
 				}
+
+				echan <- errs
 				return
 			case err = <-gwech:
 				if err != nil {
@@ -235,6 +241,8 @@ func (s *server) ListenAndServe(ctx context.Context) chan []error {
 				if grunning {
 					errs = appendErr(errs, s.grpcShutdown(ctx))
 				}
+
+				echan <- errs
 				return
 			}
 		}
